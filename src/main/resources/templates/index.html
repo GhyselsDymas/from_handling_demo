@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
 
     <!--CSS-->
-    <link rel="stylesheet" th:href="@{CSS/Style.css}">
+    <link rel="stylesheet" th:href="@{~/CSS/style.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
@@ -27,14 +27,16 @@
             <table id="producttable">
                 <thead>
                 <tr>
-                    <td>Naam</td>
-                    <td>Price</td>
+                    <th th:text="#{col_name}"></th>
+                    <th th:text="#{col_price}"></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="snack : ${all}">
                     <td th:text="${snack .name}"></td>
                     <td th:text="${snack .price}"></td>
+                    <td><a th:href="@{~/delete/{id}(id = ${snack .id})}"  th:text="#{delete}"></a></td>
                 </tr>
                 </tbody>
             </table>
@@ -44,28 +46,28 @@
 
         <form method="post" th:action="@{~/index}" th:object="${nSnack}">
             <div>
-                <label>Name</label>
+                <label th:text="#{col_name}"></label>
                 <input th:field="*{name}" type="text" placeholder="e.g. Product name"/>
                 <br>
-                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
                 <br>
             </div>
             <div>
-                <label>Price</label>
+                <label  th:text="#{col_price}"></label>
                 <input th:field="*{price}" type="text" placeholder="e.g. 1.50€"/>
                 <br>
-                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></span>
                 <br>
             </div>
             <div>
                 <label>Amount</label>
                 <input th:field="*{amount}" type="number" placeholder="e.g. 5"/>
                 <br>
-                <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+                <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="error"></span>
                 <br>
             </div>
             <div>
-               <input type="submit">
+                <input type="submit" th:value="#{submit}">
             </div>
         </form>
 
